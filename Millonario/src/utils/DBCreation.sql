@@ -60,6 +60,7 @@ CREATE TABLE log (
 );
 
 INSERT INTO round (round_id,round_prize) values
+(0,0),
 (1,1000),
 (2,3000),
 (3,10000),

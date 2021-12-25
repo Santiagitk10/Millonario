@@ -5,11 +5,17 @@
  */
 package millonario;
 
+import Access.AnswerDAO;
 import Access.LogDAO;
+import Access.PlayerDAO;
 import Access.QuestionDAO;
+import Access.RoundDAO;
 import Controller.Controller;
+import Model.AnswerModel;
 import Model.LogModel;
+import Model.PlayerModel;
 import Model.QuestionModel;
+import Model.RoundModel;
 import View.MillMainFrame;
 
 /**
@@ -27,8 +33,14 @@ public class Millonario {
         LogDAO logDAO = new LogDAO();
         QuestionModel qMod = new QuestionModel();
         QuestionDAO qDAO = new QuestionDAO();
+        AnswerModel answMod = new AnswerModel();
+        AnswerDAO answDAO = new AnswerDAO();
+        RoundModel roundMod = new RoundModel();
+        RoundDAO roundDAO = new RoundDAO();
+        PlayerModel playerMod = new PlayerModel();
+        PlayerDAO playerDAO = new PlayerDAO();
         
-        Controller cont = new Controller(millMainFrame, logMod,logDAO, qMod, qDAO);
+        Controller cont = new Controller(millMainFrame, logMod,logDAO, qMod, qDAO, answMod, answDAO, roundMod, roundDAO, playerMod, playerDAO);
         cont.initialize();
     }
     

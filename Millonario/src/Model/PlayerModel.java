@@ -14,6 +14,10 @@ public class PlayerModel {
     private long playerId;
     private String playerName;
 
+    public PlayerModel() {
+    }
+  
+
     public PlayerModel(long playerId, String playerName) {
         this.playerId = playerId;
         this.playerName = playerName;
@@ -35,6 +39,10 @@ public class PlayerModel {
         this.playerName = playerName;
     }
     
-    
+    @Override
+    public String toString(){
+        String playerId = Long.toString(this.getPlayerId());
+        return playerId;
+    }
     
 }

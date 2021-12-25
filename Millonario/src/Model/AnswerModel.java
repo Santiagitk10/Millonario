@@ -16,6 +16,11 @@ public class AnswerModel {
     private String answer;
     private int questionIdFk;
 
+    public AnswerModel() {
+    }
+    
+    
+
     public AnswerModel(int answerId, String answerStatus, String answer, int questionIdFk) {
         this.answerId = answerId;
         this.answerStatus = answerStatus;

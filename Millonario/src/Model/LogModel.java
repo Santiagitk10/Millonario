@@ -15,6 +15,7 @@ public class LogModel {
     private int accumPrize;
     private int finalRoundFk;
     private long playerIdFk;
+    private String playerName;
 
     public LogModel() {
         
@@ -26,6 +27,13 @@ public class LogModel {
         this.accumPrize = accumPrize;
         this.finalRoundFk = finalRoundFk;
         this.playerIdFk = playerIdFk;
+    }
+    
+    public LogModel(int logId, int accumPrize, int finalRoundFk, String playerName) {
+        this.logId = logId;
+        this.accumPrize = accumPrize;
+        this.finalRoundFk = finalRoundFk;
+        this.playerName = playerName;
     }
 
     public int getLogId() {
@@ -61,7 +69,7 @@ public class LogModel {
     }
     
     public Object[] toArray(){
-        Object[] data = {logId,accumPrize,finalRoundFk,playerIdFk};
+        Object[] data = {logId,accumPrize,finalRoundFk,playerName};
         return data;
     }
     

@@ -14,6 +14,9 @@ public class RoundModel {
     private int roundId;
     private int roundPrize;
 
+    public RoundModel() {
+    }
+
     public RoundModel(int roundId, int roundPrize) {
         this.roundId = roundId;
         this.roundPrize = roundPrize;

@@ -5,7 +5,7 @@
  */
 package Access;
 
-import Model.LogModel;
+import Model.PlayerModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,28 +19,28 @@ import utils.ConnectDB;
  *
  * @author SANTIAGO SIERRA
  */
-public class LogDAO {
+public class PlayerDAO {
     private Connection conn = null;
     
     
-    public void insertLog(LogModel log) {
+    public int insertPlayer(PlayerModel player) {
+        
+        int rowsInserted = 0;
         
         try{
 
             conn = ConnectDB.getConnection();
 
             
-            String sql = "insert into log(accum_prize, final_round_fk, player_id_fk) values (?,?,?);";
+            String sql = "insert into player(player_id, player_name) values (?,?);";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, log.getAccumPrize());
-            statement.setInt(2, log.getFinalRoundFk());
-            statement.setLong(3, log.getPlayerIdFk());
+            statement.setLong(1,player.getPlayerId());
+            statement.setString(2,player.getPlayerName());
             
             
-            
-            int rowsInserted = statement.executeUpdate();
+            rowsInserted = statement.executeUpdate();
             if(rowsInserted > 0){
-                JOptionPane.showMessageDialog(null,"El registro de la partida fue agregado exitosamente");
+                JOptionPane.showMessageDialog(null,"El registro del jugador fue agregado exitosamente");
             }
             
         } catch(SQLException ex){
@@ -52,20 +52,19 @@ public class LogDAO {
                 JOptionPane.showMessageDialog(null, "Código: " + ex.getErrorCode() + "\nError : " + ex.getMessage());
             }
         }
+        
+        return rowsInserted;
     }
     
     
-    public ArrayList<LogModel> getAllLogs(){
-        ArrayList<LogModel> logs = new ArrayList();
+    public ArrayList<PlayerModel> getAllPlayers(){
+        ArrayList<PlayerModel> players = new ArrayList();
         
         try{
 
             conn = ConnectDB.getConnection();
            
-            String sql = "SELECT log.log_id, log.accum_prize, log.final_round_fk, player.player_name\n"
-                       + "FROM log\n"
-                       + "JOIN player ON player.player_id=log.player_id_fk\n"
-                       + "ORDER BY log.accum_prize DESC;";
+            String sql = "SELECT * FROM player ORDER BY player_id;";
                             
                            
                             
@@ -73,8 +72,8 @@ public class LogDAO {
             ResultSet result = statement.executeQuery(sql);
             
             while(result.next()){
-                LogModel log = new LogModel(result.getInt(1), result.getInt(2),result.getInt(3),result.getString(4));
-                logs.add(log);
+                PlayerModel player = new PlayerModel(result.getInt(1), result.getString(2));
+                players.add(player);
             }
             
         } catch(SQLException ex){
@@ -87,6 +86,8 @@ public class LogDAO {
             }
         }
         
-        return logs;
+        return players;
     }
+    
+   
 }

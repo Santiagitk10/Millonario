@@ -72,9 +72,10 @@ public class Controller implements ActionListener {
     }
     
    
-    
+    //Inicialización de componentes
     public void initialize(){
         
+        //Inicialización del Frame y carga inicial de la tabla de resultados
         showScore();
         millMainFrame.setTitle("Millonario");
         millMainFrame.setLocationRelativeTo(null);
@@ -82,6 +83,7 @@ public class Controller implements ActionListener {
         millMainFrame.jButtonQuit.setVisible(false);
         setTableResults(logDAO.getAllLogs(),millMainFrame.JTableLog);
         
+        //Creación del Combobox con información de la base de datos
         players = new ArrayList(playerDAO.getAllPlayers());
         players.add(0, new PlayerModel(0,"Jugadores"));
         JCBoxPlayerIDs = new JComboBox();
@@ -90,6 +92,8 @@ public class Controller implements ActionListener {
         JCBoxPlayerIDs.setBounds(270, 190, 160, 30);
         millMainFrame.veteralPanel.add(JCBoxPlayerIDs);
         
+        
+        //Action listeners para todos los botones
         millMainFrame.jButtonStart.addActionListener(this);
         millMainFrame.JButtonOpA.addActionListener(this);
         millMainFrame.JButtonOpB.addActionListener(this);
@@ -112,6 +116,7 @@ public class Controller implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
        
+        //Action Listener para inicializar el juego
         if(e.getSource() == millMainFrame.jButtonStart){
             millMainFrame.questionPanel.removeAll();
             millMainFrame.questionPanel.revalidate(); 
@@ -124,21 +129,21 @@ public class Controller implements ActionListener {
             setQuestion(qDAO.getQuestionsByCategoryId(clearedRounds), this.millMainFrame);
         }
         
+        //Action Listener para la validación de las respuestas
         if(e.getSource() == millMainFrame.JButtonOpA){
             checkAnswer(millMainFrame.JButtonOpA);
         }
-        
         if(e.getSource() == millMainFrame.JButtonOpB){
             checkAnswer(millMainFrame.JButtonOpB);
         }
-        
         if(e.getSource() == millMainFrame.JButtonOpC){
             checkAnswer(millMainFrame.JButtonOpC);
         }
-        
         if(e.getSource() == millMainFrame.JButtonOpD){
             checkAnswer(millMainFrame.JButtonOpD);
         }
+        
+        
         
         if(e.getSource() == millMainFrame.jButtonNewbie){
             millMainFrame.questionPanel.removeAll();
@@ -160,7 +165,7 @@ public class Controller implements ActionListener {
         }
         
         
-        
+        //Registro de Jugador Nuevo y Registro de partida
         if(e.getSource() == millMainFrame.jButtonRegisterNewbie){
             if(!millMainFrame.jTextPlayerID.equals("") && !millMainFrame.jTextPlayerName.equals("")){
                 long currentPlayerId = Long.parseLong(millMainFrame.jTextPlayerID.getText());
@@ -190,6 +195,8 @@ public class Controller implements ActionListener {
             }
         }
         
+        
+        //Registro de partida jugador antiguo
         if(e.getSource() == millMainFrame.jButtonRegisterVeteran){
 
             if(!JCBoxPlayerIDs.getSelectedItem().toString().equals("0")){
@@ -206,7 +213,7 @@ public class Controller implements ActionListener {
             }
         }
         
-        
+        //Action listener para abandonar el juego
         if(e.getSource() == millMainFrame.jButtonQuit){
             int response = JOptionPane.showConfirmDialog(millMainFrame.jButtonQuit, "Está seguro que desea Abandonar?\n Se irá de la competencia con el acumulado actual", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(response == JOptionPane.YES_OPTION ){
@@ -247,7 +254,7 @@ public class Controller implements ActionListener {
         
     }
     
-    
+    //Método para la actualización de la tabla
     public void setTableResults(ArrayList<LogModel> logModels, JTable table){
             table.removeAll();
             DefaultTableModel tableModel = new DefaultTableModel();
@@ -259,7 +266,7 @@ public class Controller implements ActionListener {
             }
     }
     
-    
+    //Método para la selección de la pregunta
     public void setQuestion(ArrayList<QuestionModel> questionModels, MillMainFrame millMainFrame){
         Random ran = new Random();
         int randomNum = ran.nextInt(5);
@@ -281,7 +288,7 @@ public class Controller implements ActionListener {
         
     }
 
-    
+    //Método para validar la opción seleccionada
     public void checkAnswer(JButton button){
         if(button.getText().equals(currentCorrectAnswer)){
            JOptionPane.showMessageDialog(null,"Correcto!");
@@ -294,7 +301,7 @@ public class Controller implements ActionListener {
            if(clearedRounds<5){
               setQuestion(qDAO.getQuestionsByCategoryId(clearedRounds), this.millMainFrame);
            }
-           
+           //Jugador ha contestado todas las rondas correctamente
            if(accumPrize == 139000){
                nextPrize = 0;
                showScore();
@@ -324,12 +331,15 @@ public class Controller implements ActionListener {
         }
     }
     
+    //Método para mostrar las variables del juego
     public void showScore(){
         millMainFrame.jLabelNextPrize.setText(Integer.toString(nextPrize));
         millMainFrame.jLabelAccumPrize.setText(Integer.toString(accumPrize));
         millMainFrame.jLabelClearedRound.setText(Integer.toString(clearedRounds));
     }
     
+    
+    //Método para volver a comenzar el juego
     public void resetGame(){
         clearedRounds = 0;
         accumPrize = 0;
@@ -346,6 +356,8 @@ public class Controller implements ActionListener {
         millMainFrame.jButtonStart.setVisible(true);
     }
     
+    
+    //Método para refrescar el combox para capturar los datos nuevos en la tabla de jugador y mostrar actualizado
     public void resetComboBox(){
         players = new ArrayList(playerDAO.getAllPlayers());
         players.add(0, new PlayerModel(0,"Jugadores"));

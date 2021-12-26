@@ -62,7 +62,7 @@ Si el jugador no abandona, el juego termina cuando:
 
 Al final se registra el jugador para luego hacer el registro de la partida
 
-![image](https://user-images.githubusercontent.com/93751091/147414434-76b951a8-4213-4bef-a2ea-3dc22ddcb70a.png)
+![image](https://user-images.githubusercontent.com/93751091/147415080-c892431f-518d-4dd5-89ce-2308b871a5e3.png)
 
 Si el jugador ya se ha registrado anteriormente puede hacer el registro mediante un combobox que trae los IDs de los jugadores de la base de datos
 
